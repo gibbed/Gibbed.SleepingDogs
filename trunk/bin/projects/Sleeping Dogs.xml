@@ -1,0 +1,22 @@
+<project>
+	<name>Sleeping Dogs</name>
+	<dependencies>
+		<dependency>Shared</dependency>
+	</dependencies>
+	<list_location>Sleeping Dogs</list_location>
+	<install_locations>
+		<install_location>
+			<action type="registry" key="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 202170" value="InstallLocation" />
+		</install_location>
+		<install_location>
+			<action type="registry" key="HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 202170" value="InstallLocation" />
+		</install_location>
+		<install_location>
+			<action type="registry" key="HKEY_CURRENT_USER\Software\Valve\Steam" value="SteamPath" />
+			<action type="fix" />
+			<action type="combine">steamapps</action>
+			<action type="combine">common</action>
+			<action type="combine">SleepingDogs</action>
+		</install_location>
+	</install_locations>
+</project>
