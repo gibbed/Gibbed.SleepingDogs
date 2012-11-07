@@ -1,4 +1,4 @@
-; 100/1144 (8%)
+; 115/1144 (10%)
 Data\Vehicles\Aggressor01_Var02.perm.bin
 Data\Vehicles\Aggressor01_Var02.temp.bin
 Data\Vehicles\C5001.perm.bin
@@ -63,6 +63,8 @@ Data\Vehicles_New\CungSau01_Var02.perm.bin
 Data\Vehicles_New\CungSau01_Var02.temp.bin
 Data\Vehicles_New\CungSau01_Var03.perm.bin
 Data\Vehicles_New\CungSau01_Var03.temp.bin
+Data\Vehicles_New\CungSau01_Var04_ts002.perm.bin
+Data\Vehicles_New\CungSau01_Var04_ts002.temp.bin
 Data\Vehicles_New\CungSauLiquid01.perm.bin
 Data\Vehicles_New\CungSauLiquid01.temp.bin
 Data\Vehicles_New\CungSauPickup01.perm.bin
@@ -73,12 +75,21 @@ Data\Vehicles_New\DummyVehicleRig.perm.bin
 Data\Vehicles_New\DummyVehicleRig.temp.bin
 Data\Vehicles_New\Ferry01.perm.bin
 Data\Vehicles_New\Ferry01.temp.bin
+Data\Vehicles_New\Global.perm.bin
+Data\Vehicles_New\Global.temp.bin
 Data\Vehicles_New\GoldCoast01.perm.bin
 Data\Vehicles_New\GoldCoast01.temp.bin
 Data\Vehicles_New\GreenGill01.perm.bin
 Data\Vehicles_New\GreenGill01.temp.bin
 Data\Vehicles_New\Jet620V01.perm.bin
 Data\Vehicles_New\Jet620V01.temp.bin
+Data\Vehicles_New\Klienod01.perm.bin
+Data\Vehicles_New\Klienod01_CopLight.perm.bin
+Data\Vehicles_New\Klienod01_CopLight.temp.bin
+Data\Vehicles_New\Klienod01_CopLight_ts_001.perm.bin
+Data\Vehicles_New\Klienod01_CopLight_ts_001.temp.bin
+Data\Vehicles_New\KlienodCop01_ts001.perm.bin
+Data\Vehicles_New\KlienodCop01_ts001.temp.bin
 Data\Vehicles_New\Leo01.perm.bin
 Data\Vehicles_New\Leo01.temp.bin
 Data\Vehicles_New\LeoCoastGuard01.perm.bin
@@ -95,6 +106,10 @@ Data\Vehicles_New\Spanner01.perm.bin
 Data\Vehicles_New\Spanner01.temp.bin
 Data\Vehicles_New\SuperLight01.perm.bin
 Data\Vehicles_New\SuperLight01.temp.bin
+Data\Vehicles_New\WheelStyle11.perm.bin
+Data\Vehicles_New\WheelStyle11.temp.bin
+Data\Vehicles_New\WheelStyle11_ts_001.perm.bin
+Data\Vehicles_New\WheelStyle11_ts_001.temp.bin
 Data\Vehicles_New\WheelStyle35.perm.bin
 Data\Vehicles_New\WheelStyle35.temp.bin
 Data\Vehicles_New\WheelStyle35_Rear.perm.bin
