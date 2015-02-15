@@ -1,4 +1,4 @@
-; 886/913 (97%)
+; 908/913 (99%)
 Data\Global\abk_files.bin
 Data\Global\act_files.bin
 Data\Global\Audio.perm.bin
@@ -16,6 +16,8 @@ Data\Global\Effects.perm.bin
 Data\Global\Effects.temp.bin
 Data\Global\EffectsTexturePack.perm.bin
 Data\Global\EffectsTexturePack.temp.bin
+Data\Global\Fonts.perm.bin
+Data\Global\Fonts.temp.bin
 Data\Global\GlobalDNA.perm.bin
 Data\Global\GlobalDNA.temp.bin
 Data\Global\LightingTexturePack.perm.bin
@@ -24,6 +26,8 @@ Data\Global\Models.perm.bin
 Data\Global\Models.temp.bin
 Data\Global\Physics.perm.bin
 Data\Global\Physics.temp.bin
+Data\Global\PhysicsProperties.perm.bin
+Data\Global\PhysicsProperties.temp.bin
 Data\Global\PropertySets\Engines.bin
 Data\Global\PropertySets\GlobalProperties.bin
 Data\Global\RagdollDefinitions.perm.bin
@@ -36,6 +40,7 @@ Data\Global\StateBlocks.temp.bin
 Data\Global\TexturePack.perm.bin
 Data\Global\TexturePack.temp.bin
 Data\Global\TrueCrowd.bin
+Data\Global\uef_files.bin
 Data\Global\ufg_sig.sig
 Data\Global\wst_files.bin
 Data\Global\WTHKTexturePack.perm.bin
@@ -102,6 +107,7 @@ Data\Scripts\Class[20b2e3cc].skoo-bin
 Data\Scripts\Class[213fb4f7].skoo-bin
 Data\Scripts\Class[2163e2af].skoo-bin
 Data\Scripts\Class[2193b23c].skoo-bin
+Data\Scripts\Class[22a04979].skoo-bin
 Data\Scripts\Class[22afd513].skoo-bin
 Data\Scripts\Class[23414495].skoo-bin
 Data\Scripts\Class[237ee031].skoo-bin
@@ -114,6 +120,7 @@ Data\Scripts\Class[25a2ff18].skoo-bin
 Data\Scripts\Class[25fea940].skoo-bin
 Data\Scripts\Class[261c4754].skoo-bin
 Data\Scripts\Class[2632e24f].skoo-bin
+Data\Scripts\Class[266154ce].skoo-bin
 Data\Scripts\Class[267a48da].skoo-bin
 Data\Scripts\Class[27805922].skoo-bin
 Data\Scripts\Class[27c4ebd3].skoo-bin
@@ -129,6 +136,7 @@ Data\Scripts\Class[2988653b].skoo-bin
 Data\Scripts\Class[2a0b2e72].skoo-bin
 Data\Scripts\Class[2a40fcc0].skoo-bin
 Data\Scripts\Class[2ab22a93].skoo-bin
+Data\Scripts\Class[2b227217].skoo-bin
 Data\Scripts\Class[2b42dbf5].skoo-bin
 Data\Scripts\Class[2b6e1d94].skoo-bin
 Data\Scripts\Class[2b7ae013].skoo-bin
@@ -145,6 +153,7 @@ Data\Scripts\Class[2eca33c5].skoo-bin
 Data\Scripts\Class[2ed366b5].skoo-bin
 Data\Scripts\Class[2f2406cb].skoo-bin
 Data\Scripts\Class[2fbbfda4].skoo-bin
+Data\Scripts\Class[2fe36fa0].skoo-bin
 Data\Scripts\Class[30027917].skoo-bin
 Data\Scripts\Class[303ed673].skoo-bin
 Data\Scripts\Class[304610ec].skoo-bin
@@ -156,6 +165,7 @@ Data\Scripts\Class[30a5a431].skoo-bin
 Data\Scripts\Class[31641ea3].skoo-bin
 Data\Scripts\Class[3188aabe].skoo-bin
 Data\Scripts\Class[31891230].skoo-bin
+Data\Scripts\Class[31a43fa5].skoo-bin
 Data\Scripts\Class[323bc22b].skoo-bin
 Data\Scripts\Class[3286d757].skoo-bin
 Data\Scripts\Class[3326dfcc].skoo-bin
@@ -173,6 +183,7 @@ Data\Scripts\Class[34fdc61c].skoo-bin
 Data\Scripts\Class[35256a9b].skoo-bin
 Data\Scripts\Class[353db016].skoo-bin
 Data\Scripts\Class[35480f87].skoo-bin
+Data\Scripts\Class[35652212].skoo-bin
 Data\Scripts\Class[360e8e56].skoo-bin
 Data\Scripts\Class[36305c3e].skoo-bin
 Data\Scripts\Class[3647cae0].skoo-bin
@@ -251,17 +262,20 @@ Data\Scripts\Class[4a21ad2d].skoo-bin
 Data\Scripts\Class[4ad7d552].skoo-bin
 Data\Scripts\Class[4ada7d3a].skoo-bin
 Data\Scripts\Class[4b4df96d].skoo-bin
+Data\Scripts\Class[4b85891c].skoo-bin
 Data\Scripts\Class[4c139dec].skoo-bin
 Data\Scripts\Class[4c997a50].skoo-bin
 Data\Scripts\Class[4cdb358d].skoo-bin
 Data\Scripts\Class[4dc29330].skoo-bin
 Data\Scripts\Class[4e0c9298].skoo-bin
+Data\Scripts\Class[4f4494ab].skoo-bin
 Data\Scripts\Class[4f5e5003].skoo-bin
 Data\Scripts\Class[4f757b8b].skoo-bin
 Data\Scripts\Class[4fc7578e].skoo-bin
 Data\Scripts\Class[50664739].skoo-bin
 Data\Scripts\Class[50c8e936].skoo-bin
 Data\Scripts\Class[50f9c8dd].skoo-bin
+Data\Scripts\Class[5103c4ae].skoo-bin
 Data\Scripts\Class[516cbcb].skoo-bin
 Data\Scripts\Class[51f27042].skoo-bin
 Data\Scripts\Class[521a4607].skoo-bin
@@ -275,6 +289,7 @@ Data\Scripts\Class[5438d56a].skoo-bin
 Data\Scripts\Class[549a92d].skoo-bin
 Data\Scripts\Class[54f71887].skoo-bin
 Data\Scripts\Class[54faac61].skoo-bin
+Data\Scripts\Class[55c2d919].skoo-bin
 Data\Scripts\Class[569eed0e].skoo-bin
 Data\Scripts\Class[5715f693].skoo-bin
 Data\Scripts\Class[57208c59].skoo-bin
@@ -286,6 +301,7 @@ Data\Scripts\Class[57b8d093].skoo-bin
 Data\Scripts\Class[57da2049].skoo-bin
 Data\Scripts\Class[57ff657c].skoo-bin
 Data\Scripts\Class[581f8a4].skoo-bin
+Data\Scripts\Class[5881ffc0].skoo-bin
 Data\Scripts\Class[58c32de5].skoo-bin
 Data\Scripts\Class[590e44af].skoo-bin
 Data\Scripts\Class[59875bf1].skoo-bin
@@ -296,6 +312,7 @@ Data\Scripts\Class[5b627d3a].skoo-bin
 Data\Scripts\Class[5b6d4666].skoo-bin
 Data\Scripts\Class[5bc61614].skoo-bin
 Data\Scripts\Class[5c21b761].skoo-bin
+Data\Scripts\Class[5c40e277].skoo-bin
 Data\Scripts\Class[5d199f84].skoo-bin
 Data\Scripts\Class[5d464646].skoo-bin
 Data\Scripts\Class[5dcf5918].skoo-bin
@@ -326,6 +343,7 @@ Data\Scripts\Class[634bb37c].skoo-bin
 Data\Scripts\Class[63cf566b].skoo-bin
 Data\Scripts\Class[63d5dce4].skoo-bin
 Data\Scripts\Class[640b70e5].skoo-bin
+Data\Scripts\Class[640f5fca].skoo-bin
 Data\Scripts\Class[643bf589].skoo-bin
 Data\Scripts\Class[65563289].skoo-bin
 Data\Scripts\Class[6580e4a5].skoo-bin
@@ -728,6 +746,7 @@ Data\Scripts\Class[d556367b].skoo-bin
 Data\Scripts\Class[d5684f51].skoo-bin
 Data\Scripts\Class[d57ddaa7].skoo-bin
 Data\Scripts\Class[d657c192].skoo-bin
+Data\Scripts\Class[d65d00b5].skoo-bin
 Data\Scripts\Class[d660a944].skoo-bin
 Data\Scripts\Class[d6c77abd].skoo-bin
 Data\Scripts\Class[d70b4dc6].skoo-bin
@@ -747,6 +766,7 @@ Data\Scripts\Class[da134e28].skoo-bin
 Data\Scripts\Class[da5c5bd2].skoo-bin
 Data\Scripts\Class[dabb5ad3].skoo-bin
 Data\Scripts\Class[dac1ac59].skoo-bin
+Data\Scripts\Class[db1e266c].skoo-bin
 Data\Scripts\Class[dbb59e8e].skoo-bin
 Data\Scripts\Class[dbbc314c].skoo-bin
 Data\Scripts\Class[dc161e50].skoo-bin
@@ -755,6 +775,7 @@ Data\Scripts\Class[dcaa81fb].skoo-bin
 Data\Scripts\Class[dd0e9b2c].skoo-bin
 Data\Scripts\Class[dd24507].skoo-bin
 Data\Scripts\Class[dd3e6634].skoo-bin
+Data\Scripts\Class[dd6b74ff].skoo-bin
 Data\Scripts\Class[dd9f204e].skoo-bin
 Data\Scripts\Class[de00b1ee].skoo-bin
 Data\Scripts\Class[dead0973].skoo-bin
@@ -768,6 +789,7 @@ Data\Scripts\Class[df0faded].skoo-bin
 Data\Scripts\Class[df2a9ad9].skoo-bin
 Data\Scripts\Class[df67f752].skoo-bin
 Data\Scripts\Class[df71fb85].skoo-bin
+Data\Scripts\Class[dfdf3bdb].skoo-bin
 Data\Scripts\Class[dfee72f].skoo-bin
 Data\Scripts\Class[e03ee138].skoo-bin
 Data\Scripts\Class[e0499c9].skoo-bin

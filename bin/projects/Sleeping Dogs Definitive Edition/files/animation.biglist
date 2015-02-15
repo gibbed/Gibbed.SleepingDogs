@@ -1,4 +1,4 @@
-; 739/1071 (69%)
+; 744/1071 (69%)
 Data\Animation\AM2_Drive.bin
 Data\Animation\AM3_Lesson.bin
 Data\Animation\Baton_Equipped.bin
@@ -107,6 +107,7 @@ Data\Animation\GU_4.bin
 Data\Animation\Guarding.bin
 Data\Animation\Gun_Equipped.bin
 Data\Animation\HandGun_JC2001_Equipped.bin
+Data\Animation\Helicopter.bin
 Data\Animation\HTram.bin
 Data\Animation\HTram_Drive.bin
 Data\Animation\HTram_Into.bin
@@ -145,6 +146,7 @@ Data\Animation\Locomotion_Jump.bin
 Data\Animation\Locomotion_Land.bin
 Data\Animation\Locomotion_Music.bin
 Data\Animation\Locomotion_Nervous.bin
+Data\Animation\Locomotion_New.bin
 Data\Animation\Locomotion_OnFire.bin
 Data\Animation\Locomotion_OnFire_Dies.bin
 Data\Animation\Locomotion_PickUpObject.bin
@@ -346,6 +348,7 @@ Data\Animation\Pedestrian_FoodStick.bin
 Data\Animation\Pedestrian_Investigate.bin
 Data\Animation\Pedestrian_Junkie.bin
 Data\Animation\Pedestrian_LookBothWays.bin
+Data\Animation\Pedestrian_New.bin
 Data\Animation\Pedestrian_NoodleBowl.bin
 Data\Animation\Pedestrian_PorkBun.bin
 Data\Animation\Pedestrian_Punch.bin
@@ -651,10 +654,12 @@ Data\Animation\Social_Gestures_ListenMale.bin
 Data\Animation\Social_Gestures_ListenMale_New.bin
 Data\Animation\Social_Gestures_TalkingFemale.bin
 Data\Animation\Social_Gestures_TalkingMale.bin
+Data\Animation\Social_Gestures_TalkingMale_New.bin
 Data\Animation\Social_Intimidate.bin
 Data\Animation\Social_Invite.bin
 Data\Animation\Social_Listen.bin
 Data\Animation\Social_Purchase.bin
+Data\Animation\Standard_Strike.bin
 Data\Animation\Strikes.bin
 Data\Animation\SU_3_Warehouse.bin
 Data\Animation\Swim.bin
