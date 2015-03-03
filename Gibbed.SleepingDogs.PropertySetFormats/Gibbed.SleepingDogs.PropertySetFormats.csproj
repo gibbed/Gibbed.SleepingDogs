@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1BD23B0B-A25F-425C-AE1C-CCF9105B2B06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gibbed.SleepingDogs.PropertySetFormats</RootNamespace>
+    <AssemblyName>Gibbed.SleepingDogs.PropertySetFormats</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BasicHandler.cs" />
+    <Compile Include="Handlers\BooleanHandler.cs" />
+    <Compile Include="Handlers\Float32Handler.cs" />
+    <Compile Include="Handlers\Float64Handler.cs" />
+    <Compile Include="Handlers\Float32RangedHandler.cs" />
+    <Compile Include="Handlers\Matrix44Handler.cs" />
+    <Compile Include="Handlers\ResourceHandler.cs" />
+    <Compile Include="Handlers\SymbolHandler.cs" />
+    <Compile Include="Handlers\SymbolUpperCaseHandler.cs" />
+    <Compile Include="Handlers\WwiseIdHandler.cs" />
+    <Compile Include="Handlers\Int128Handler.cs" />
+    <Compile Include="Handlers\Int16Handler.cs" />
+    <Compile Include="Handlers\Int32Handler.cs" />
+    <Compile Include="Handlers\Int32RangedHandler.cs" />
+    <Compile Include="Handlers\Int64Handler.cs" />
+    <Compile Include="Handlers\Int8Handler.cs" />
+    <Compile Include="IHandler.cs" />
+    <Compile Include="Handlers\TransQuaternionHandler.cs" />
+    <Compile Include="Handlers\TransRotationHandler.cs" />
+    <Compile Include="Handlers\Vector2Handler.cs" />
+    <Compile Include="Handlers\Vector3Handler.cs" />
+    <Compile Include="Handlers\Vector4Handler.cs" />
+    <Compile Include="Handlers\ListHandler.cs" />
+    <Compile Include="Handlers\PropertySetHandler.cs" />
+    <Compile Include="Handlers\StringHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HandlerFactory.cs" />
+    <Compile Include="Handlers\UInt16Handler.cs" />
+    <Compile Include="Handlers\UInt32Handler.cs" />
+    <Compile Include="Handlers\UInt32RangedHandler.cs" />
+    <Compile Include="Handlers\UInt64Handler.cs" />
+    <Compile Include="Handlers\UInt8Handler.cs" />
+    <Compile Include="PropertySetSchemaProvider.cs" />
+    <Compile Include="PropertySet.cs" />
+    <Compile Include="PropertyList.cs" />
+    <Compile Include="PropertySetSchema.cs" />
+    <Compile Include="PropertySchema.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gibbed.IO\Gibbed.IO.csproj">
+      <Project>{047857BA-DAA3-4CA7-AFB8-A1B082B28C6A}</Project>
+      <Name>Gibbed.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gibbed.SleepingDogs.DataFormats\Gibbed.SleepingDogs.DataFormats.csproj">
+      <Project>{D8857DDE-5107-4743-A54A-9AF3EE278187}</Project>
+      <Name>Gibbed.SleepingDogs.DataFormats</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
