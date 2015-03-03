@@ -249,7 +249,15 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 var rawProperty = rawProperties.Current;
                 var value = ParseProperty(rawProperty, instance);
                 instance.Items.Add(value);
+
+                var weight = rawProperty.ParseAttributeUInt32("weight", uint.MaxValue);
+                if (weight != uint.MaxValue)
+                {
+                    instance.Weights.Add(weight);
+                }
             }
+
+            instance.TotalWeight = instance.Weights.Aggregate<uint, uint>(0, (c, w) => c + w);
 
             if (instance.Items.Count == 0)
             {
