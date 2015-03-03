@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using Gibbed.IO;
 using Gibbed.SleepingDogs.FileFormats;
@@ -230,6 +231,15 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         private static void WritePropertyList(XmlWriter writer, PropertySetFormats.PropertyList data)
         {
+            bool hasWeights = data.Weights.Count > 0;
+            if (data.TotalWeight != 0)
+            {
+                if (data.TotalWeight != data.Weights.Sum(w => w))
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+
             var ignoredFlags = DataFormats.PropertyCollectionFlags.OwnerIsList |
                                DataFormats.PropertyCollectionFlags.IsList |
                                DataFormats.PropertyCollectionFlags.OwnerIsSet;
@@ -239,15 +249,15 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 writer.WriteAttributeString("flags", cleanedFlags.ToString());
             }
 
-            foreach (var item in data.Items)
+            for (int i = 0; i < data.Items.Count; i++)
             {
                 writer.WriteStartElement("ListProperty");
-                WriteProperty(writer, null, item, false);
+                WriteProperty(writer, null, data.Items[i], false, hasWeights == false ? (uint?)null : data.Weights[i]);
                 writer.WriteEndElement();
             }
         }
 
-        private static void WriteProperty(XmlWriter writer, uint? name, object value, bool isDefault)
+        private static void WriteProperty(XmlWriter writer, uint? name, object value, bool isDefault, uint? weight = null)
         {
             if (value == null)
             {
@@ -268,6 +278,11 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
             if (isDefault == true)
             {
                 writer.WriteAttributeString("default", "True");
+            }
+
+            if (weight.HasValue == true)
+            {
+                writer.WriteAttributeString("weight", weight.Value.ToString(culture));
             }
 
             switch (handler.XmlTag)
