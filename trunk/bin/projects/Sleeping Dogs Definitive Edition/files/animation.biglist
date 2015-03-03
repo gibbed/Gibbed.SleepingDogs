@@ -1,4 +1,4 @@
-; 744/1071 (69%)
+; 751/1071 (70%)
 Data\Animation\AM2_Drive.bin
 Data\Animation\AM3_Lesson.bin
 Data\Animation\Baton_Equipped.bin
@@ -29,6 +29,7 @@ Data\Animation\CBoat.bin
 Data\Animation\CBoat_Drive.bin
 Data\Animation\CBoat_Drive_Gun.bin
 Data\Animation\CBoat_Into.bin
+Data\Animation\CD_01_Gameplay.bin
 Data\Animation\Chicken_Equipped.bin
 Data\Animation\Circling.bin
 Data\Animation\Cleaver_Equipped.bin
@@ -61,9 +62,14 @@ Data\Animation\Door_Use.bin
 Data\Animation\DoorDouble.bin
 Data\Animation\DrunkenMaster.bin
 Data\Animation\E_AmandaDateCall.bin
+Data\Animation\E_CI_1.bin
+Data\Animation\E_CP_1.bin
 Data\Animation\E_TiffanyDateCall.bin
 Data\Animation\E_TranStoreCall.bin
 Data\Animation\F_AP_1.bin
+Data\Animation\F_CNP_3.bin
+Data\Animation\F_RHT_1.bin
+Data\Animation\F_RI_1.bin
 Data\Animation\F_TS_1.bin
 Data\Animation\F_TTS_1.bin
 Data\Animation\Facial.bin
@@ -314,6 +320,7 @@ Data\Animation\NMC_2_Chase.bin
 Data\Animation\NMC_2a_Chase.bin
 Data\Animation\NMC_2b_Chase.bin
 Data\Animation\NMC_3_Fight.bin
+Data\Animation\PB_2_ThiefChase.bin
 Data\Animation\Ped_Bike.bin
 Data\Animation\PED_PAIR_FindWitness.bin
 Data\Animation\Ped_Scoot.bin
