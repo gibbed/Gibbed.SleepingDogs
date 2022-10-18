@@ -43,7 +43,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new Vector2(x, y);
         }
 
-        public static void Write(Stream output, Vector2 instance, Endian endian)
+        public static void Write(Vector2 instance, Stream output, Endian endian)
         {
             output.WriteValueF32(instance.X, endian);
             output.WriteValueF32(instance.Y, endian);
@@ -51,7 +51,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

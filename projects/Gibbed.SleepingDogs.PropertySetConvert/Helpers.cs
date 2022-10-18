@@ -32,7 +32,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
         {
             if (s == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException(nameof(s));
             }
 
             if (s.StartsWith("0x") == false)
@@ -43,8 +43,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
             s = s.Substring(2);
 
-            uint dummy;
-            if (uint.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out dummy) == false)
+            if (uint.TryParse(s, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out uint dummy) == false)
             {
                 result = 0;
                 return false;
@@ -56,8 +55,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseSymbol(string s, out uint result)
         {
-            uint dummy;
-            if (TryParseHash(s, out dummy, StringHelpers.HashSymbol) == false)
+            if (TryParseHash(s, out uint dummy, StringHelpers.HashSymbol) == false)
             {
                 result = 0;
                 return false;
@@ -69,8 +67,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseSymbol(string s, out DataFormats.Symbol result)
         {
-            uint dummy;
-            if (TryParseSymbol(s, out dummy) == false)
+            if (TryParseSymbol(s, out uint dummy) == false)
             {
                 result = DataFormats.Symbol.Invalid;
                 return false;
@@ -82,8 +79,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseSymbolUpperCase(string s, out uint result)
         {
-            uint dummy;
-            if (TryParseHash(s, out dummy, StringHelpers.HashSymbolUpperCase) == false)
+            if (TryParseHash(s, out uint dummy, StringHelpers.HashSymbolUpperCase) == false)
             {
                 result = 0;
                 return false;
@@ -95,8 +91,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseSymbolUpperCase(string s, out DataFormats.SymbolUpperCase result)
         {
-            uint dummy;
-            if (TryParseSymbolUpperCase(s, out dummy) == false)
+            if (TryParseSymbolUpperCase(s, out uint dummy) == false)
             {
                 result = DataFormats.SymbolUpperCase.Invalid;
                 return false;
@@ -108,8 +103,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseWwiseId(string s, out uint result)
         {
-            uint dummy;
-            if (TryParseHash(s, out dummy, StringHelpers.HashWwiseId) == false)
+            if (TryParseHash(s, out uint dummy, StringHelpers.HashWwiseId) == false)
             {
                 result = 0;
                 return false;
@@ -121,8 +115,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         public static bool TryParseWwiseId(string s, out DataFormats.WwiseId result)
         {
-            uint dummy;
-            if (TryParseWwiseId(s, out dummy) == false)
+            if (TryParseWwiseId(s, out uint dummy) == false)
             {
                 result = new DataFormats.WwiseId(0);
                 return false;

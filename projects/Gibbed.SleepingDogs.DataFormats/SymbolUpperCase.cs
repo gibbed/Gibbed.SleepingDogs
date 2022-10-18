@@ -28,7 +28,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 {
     public struct SymbolUpperCase : IEquatable<SymbolUpperCase>
     {
-        public static SymbolUpperCase Invalid;
+        public static readonly SymbolUpperCase Invalid;
 
         static SymbolUpperCase()
         {
@@ -48,14 +48,14 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new SymbolUpperCase(id);
         }
 
-        public static void Write(Stream output, SymbolUpperCase instance, Endian endian)
+        public static void Write(SymbolUpperCase instance, Stream output, Endian endian)
         {
             output.WriteValueU32(instance.Id, endian);
         }
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
 
         public static explicit operator uint(SymbolUpperCase symbol)
@@ -70,12 +70,12 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null == true)
             {
                 return false;
             }
 
-            return obj is SymbolUpperCase && Equals((SymbolUpperCase)obj);
+            return obj is SymbolUpperCase symbolUpperCase && Equals(symbolUpperCase) == true;
         }
 
         public override int GetHashCode()

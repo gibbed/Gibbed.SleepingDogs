@@ -23,24 +23,20 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Gibbed.SleepingDogs.FileFormats;
 using NDesk.Options;
 
 namespace Gibbed.SleepingDogs.PropertySetConvert
 {
     internal class Program
     {
-        private static string GetExecutableName()
-        {
-            return Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        }
-
         public static void Main(string[] args)
         {
             var mode = Mode.Unknown;
             bool showHelp = false;
             bool verbose = false;
 
-            var options = new OptionSet
+            OptionSet options = new()
             {
                 { "e|export", "convert from binary to XML", v => { if (v != null) { mode = Mode.Export; } } },
                 { "i|import", "convert from XML to binary", v => { if (v != null) { mode = Mode.Import; } } },
@@ -49,16 +45,15 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
             };
 
             List<string> extras;
-
             try
             {
                 extras = options.Parse(args);
             }
             catch (OptionException e)
             {
-                Console.Write("{0}: ", GetExecutableName());
+                Console.Write("{0}: ", ProjectHelpers.GetExecutableName());
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try `{0} --help' for more information.", GetExecutableName());
+                Console.WriteLine("Try `{0} --help' for more information.", ProjectHelpers.GetExecutableName());
                 return;
             }
 
@@ -86,8 +81,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 showHelp == true ||
                 extras.Count < 1 || extras.Count > 2)
             {
-                Console.WriteLine("Usage: {0} [OPTIONS]+ [-e] input_bin [output_dir]", GetExecutableName());
-                Console.WriteLine("       {0} [OPTIONS]+ [-i] input_dir [output_bin]", GetExecutableName());
+                Console.WriteLine("Usage: {0} [OPTIONS]+ [-e] input_bin [output_dir]", ProjectHelpers.GetExecutableName());
+                Console.WriteLine("       {0} [OPTIONS]+ [-i] input_dir [output_bin]", ProjectHelpers.GetExecutableName());
                 Console.WriteLine("Convert a property sets file between binary and XML format.");
                 Console.WriteLine();
                 Console.WriteLine("Options:");
@@ -95,7 +90,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 return;
             }
 
-            var projectPath = FileFormats.ProjectHelpers.GetProjectPath();
+            var projectPath = ProjectHelpers.GetProjectPath();
             if (File.Exists(projectPath) == false)
             {
                 Console.WriteLine($"Project file '{projectPath}' is missing!");

@@ -38,6 +38,6 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         bool UsesPointer { get; }
 
         object Read(Stream input, Endian endian, PropertySetSchemaProvider schemaProvider);
-        void Write(Stream output, object value, Endian endian, long ownerOffset, PropertySetSchemaProvider schemaProvider);
+        void Write(object value, Stream output, long ownerOffset, Endian endian, PropertySetSchemaProvider schemaProvider);
     }
 }

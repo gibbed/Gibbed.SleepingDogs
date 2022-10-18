@@ -33,12 +33,12 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
         {
         }
 
-        protected override void Write(Stream output, DataFormats.Ranged<float> value, Endian endian, long ownerOffset)
+        protected override DataFormats.Ranged<float> Read(Stream input, Endian endian)
         {
             throw new NotImplementedException();
         }
 
-        protected override DataFormats.Ranged<float> Read(Stream input, Endian endian)
+        protected override void Write(DataFormats.Ranged<float> value, Stream output, Endian endian, long ownerOffset)
         {
             throw new NotImplementedException();
         }

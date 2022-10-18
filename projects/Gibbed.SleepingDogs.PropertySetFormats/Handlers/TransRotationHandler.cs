@@ -37,7 +37,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             return DataFormats.TransRotation.Read(input, endian);
         }
 
-        protected override void Write(Stream output, DataFormats.TransRotation value, Endian endian, long ownerOffset)
+        protected override void Write(DataFormats.TransRotation value, Stream output, Endian endian, long ownerOffset)
         {
             value.Write(output, endian);
         }

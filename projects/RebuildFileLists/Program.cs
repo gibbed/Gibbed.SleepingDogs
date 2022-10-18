@@ -32,11 +32,6 @@ namespace RebuildFileLists
 {
     internal class Program
     {
-        private static string GetExecutableName()
-        {
-            return Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-        }
-
         private static string GetListPath(string installPath, string inputPath)
         {
             installPath = installPath.ToLowerInvariant();
@@ -60,29 +55,28 @@ namespace RebuildFileLists
             bool showHelp = false;
             bool verbose = false;
 
-            var options = new OptionSet()
+            OptionSet options = new()
             {
                 { "h|help", "show this message and exit", v => showHelp = v != null },
                 { "v|verbose", "be verbose", v => verbose = v != null },
             };
 
             List<string> extras;
-
             try
             {
                 extras = options.Parse(args);
             }
             catch (OptionException e)
             {
-                Console.Write("{0}: ", GetExecutableName());
+                Console.Write("{0}: ", ProjectHelpers.GetExecutableName());
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try `{0} --help' for more information.", GetExecutableName());
+                Console.WriteLine("Try `{0} --help' for more information.", ProjectHelpers.GetExecutableName());
                 return;
             }
 
             if (extras.Count != 0 || showHelp == true)
             {
-                Console.WriteLine("Usage: {0} [OPTIONS]+", GetExecutableName());
+                Console.WriteLine("Usage: {0} [OPTIONS]+", ProjectHelpers.GetExecutableName());
                 Console.WriteLine();
                 Console.WriteLine("Options:");
                 options.WriteOptionDescriptions(Console.Out);
@@ -125,12 +119,12 @@ namespace RebuildFileLists
             }
 
             Console.WriteLine("Searching for archives...");
-            var inputPaths = new List<string>();
+            List<string> inputPaths = new();
             inputPaths.AddRange(Directory.GetFiles(installPath, "*.bix", SearchOption.AllDirectories));
 
-            var outputPaths = new List<string>();
+            List<string> outputPaths = new();
 
-            var breakdown = new Breakdown();
+            Breakdown breakdown = new();
 
             Console.WriteLine("Processing...");
             foreach (var inputPath in inputPaths)
@@ -164,9 +158,9 @@ namespace RebuildFileLists
                     bix.Deserialize(input, Endian.Little);
                 }
 
-                var localBreakdown = new Breakdown();
+                Breakdown localBreakdown = new();
 
-                var names = new List<string>();
+                List<string> names = new();
                 foreach (var nameHash in bix.Entries.Select(e => e.Id).Distinct())
                 {
                     var name = hashes[nameHash];
@@ -194,10 +188,9 @@ namespace RebuildFileLists
                 }
                 Directory.CreateDirectory(outputParentPath);
 
-                using (var output = new StreamWriter(outputPath))
+                using (StreamWriter output = new(outputPath))
                 {
-                    output.WriteLine("; {0}", localBreakdown);
-
+                    output.WriteLine($"; {localBreakdown}");
                     foreach (string name in names)
                     {
                         output.WriteLine(name);
@@ -205,9 +198,9 @@ namespace RebuildFileLists
                 }
             }
 
-            using (var output = new StreamWriter(Path.Combine(listsPath, "files", "status.txt")))
+            using (StreamWriter output = new(Path.Combine(listsPath, "files", "status.txt")))
             {
-                output.WriteLine("{0}", breakdown);
+                output.WriteLine($"{breakdown}");
             }
         }
     }

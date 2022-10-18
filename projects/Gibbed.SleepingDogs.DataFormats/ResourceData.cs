@@ -85,7 +85,8 @@ namespace Gibbed.SleepingDogs.DataFormats
             this._TypeId = input.ReadValueU32(endian);
             this._DebugName = input.ReadString(36, true, Encoding.ASCII);
 
-            if (parentPointer != 0 || child0Pointer != 0 || child1Pointer != 0 ||
+            if (parentPointer != 0 ||
+                child0Pointer != 0 || child1Pointer != 0 ||
                 resourceHandlesPreviousPointer != 0 || resourceHandlesNextPointer != 0)
             {
                 throw new FormatException();

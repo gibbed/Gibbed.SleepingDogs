@@ -51,7 +51,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new ResourceHandle(nameId);
         }
 
-        public static void Write(Stream output, ResourceHandle instance, Endian endian)
+        public static void Write(ResourceHandle instance, Stream output, Endian endian)
         {
             output.WriteValueU64(0, endian); // previous pointer
             output.WriteValueU64(0, endian); // next pointer
@@ -62,7 +62,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
 
         public bool Equals(ResourceHandle other)
@@ -72,12 +72,12 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
             {
                 return false;
             }
 
-            return obj is ResourceHandle && Equals((ResourceHandle)obj);
+            return obj is ResourceHandle handle && Equals(handle) == true;
         }
 
         public override int GetHashCode()

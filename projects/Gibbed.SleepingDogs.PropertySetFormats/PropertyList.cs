@@ -40,8 +40,8 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
 
         public PropertyList()
         {
-            this._Items = new List<object>();
-            this._Weights = new List<uint>();
+            this._Items = new();
+            this._Weights = new();
         }
 
         #region Properties
@@ -57,10 +57,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
             set { this._TypeId = value; }
         }
 
-        public List<object> Items
-        {
-            get { return this._Items; }
-        }
+        public List<object> Items => this._Items;
 
         public uint TotalWeight
         {
@@ -68,10 +65,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
             set { this._TotalWeight = value; }
         }
 
-        public List<uint> Weights
-        {
-            get { return this._Weights; }
-        }
+        public List<uint> Weights => this._Weights;
         #endregion
 
         public static PropertyList Read(
@@ -80,7 +74,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
             Endian endian,
             PropertySetSchemaProvider schemaProvider)
         {
-            var instance = new PropertyList();
+            PropertyList instance = new();
             instance._Flags = resource.Flags;
             instance._TypeId = (byte)resource.TypeId;
             instance._TotalWeight = resource.TotalWeight;
@@ -143,8 +137,8 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         }
 
         public static void Write(
-            Stream output,
             PropertyList instance,
+            Stream output,
             Endian endian,
             DataFormats.PropertyList resource,
             long ownerOffset,
@@ -197,20 +191,20 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
             {
                 output.Position = dataOffset;
 
-                using (var data = new MemoryStream())
+                using (MemoryStream data = new())
                 {
                     foreach (var item in instance.Items)
                     {
                         if (handler.UsesPointer == false)
                         {
-                            handler.Write(data, item, endian, ownerOffset, schemaProvider);
+                            handler.Write(item, data, ownerOffset, endian, schemaProvider);
                             data.Position = data.Position.Align(handler.Alignment);
                             data.SetLength(data.Position);
                         }
                         else
                         {
                             var pointerOffset = output.Position - resource.DataOffset;
-                            handler.Write(output, item, endian, ownerOffset, schemaProvider);
+                            handler.Write(item, output, ownerOffset, endian, schemaProvider);
                             output.Position = output.Position.Align(handler.Alignment);
 
                             data.WriteOffset(pointerOffset, endian);
@@ -253,7 +247,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
             long ownerOffset,
             PropertySetSchemaProvider schemaProvider)
         {
-            Write(data, this, endian, resource, ownerOffset, schemaProvider);
+            Write(this, data, endian, resource, ownerOffset, schemaProvider);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new TransRotation(v0, v1, v2, v3);
         }
 
-        public static void Write(Stream output, TransRotation instance, Endian endian)
+        public static void Write(TransRotation instance, Stream output, Endian endian)
         {
             instance.V0.Write(output, endian);
             instance.V1.Write(output, endian);
@@ -59,7 +59,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

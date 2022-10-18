@@ -71,14 +71,14 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
         }
 
         public void Write(
-            Stream output,
             object value,
-            Endian endian,
+            Stream output,
             long ownerOffset,
+            Endian endian,
             PropertySetSchemaProvider schemaProvider)
         {
             var startPosition = output.Position;
-            var resource = new DataFormats.PropertyList();
+            DataFormats.PropertyList resource = new();
             output.Position += resource.Size;
 
             ((PropertyList)value).Write(output, endian, resource, startPosition, schemaProvider);

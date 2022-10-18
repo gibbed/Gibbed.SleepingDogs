@@ -34,7 +34,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         internal static BigFileSize Read(Stream input, Endian endian)
         {
-            var instance = new BigFileSize();
+            BigFileSize instance;
             instance.LoadOffset = input.ReadValueU32(endian);
             instance.CompressedSize = input.ReadValueU32(endian);
             instance.CompressedExtra = input.ReadValueU32(endian);
@@ -42,7 +42,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return instance;
         }
 
-        internal static void Write(Stream output, BigFileSize instance, Endian endian)
+        internal static void Write(BigFileSize instance, Stream output, Endian endian)
         {
             output.WriteValueU32(instance.LoadOffset, endian);
             output.WriteValueU32(instance.CompressedSize, endian);
@@ -52,7 +52,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

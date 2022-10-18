@@ -46,10 +46,10 @@ namespace Gibbed.SleepingDogs.DataFormats
             var v1 = Vector4.Read(input, endian);
             var v2 = Vector4.Read(input, endian);
             var v3 = Vector4.Read(input, endian);
-            return new Matrix44(v0, v1, v2, v3);
+            return new(v0, v1, v2, v3);
         }
 
-        public static void Write(Stream output, Matrix44 instance, Endian endian)
+        public static void Write(Matrix44 instance, Stream output, Endian endian)
         {
             instance.V0.Write(output, endian);
             instance.V1.Write(output, endian);
@@ -59,7 +59,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

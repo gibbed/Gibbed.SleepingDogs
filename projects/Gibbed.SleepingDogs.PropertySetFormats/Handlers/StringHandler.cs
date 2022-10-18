@@ -33,14 +33,14 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
         {
         }
 
-        protected override void Write(Stream output, string value, Endian endian, long ownerOffset)
-        {
-            output.WriteStringZ(value, Encoding.UTF8);
-        }
-
         protected override string Read(Stream input, Endian endian)
         {
             return input.ReadStringZ(Encoding.UTF8);
+        }
+
+        protected override void Write(string value, Stream output, Endian endian, long ownerOffset)
+        {
+            output.WriteStringZ(value, Encoding.UTF8);
         }
     }
 }

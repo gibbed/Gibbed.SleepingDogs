@@ -34,12 +34,12 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
         {
         }
 
-        protected override void Write(Stream output, BigInteger value, Endian endian, long ownerOffset)
+        protected override BigInteger Read(Stream input, Endian endian)
         {
             throw new NotImplementedException();
         }
 
-        protected override BigInteger Read(Stream input, Endian endian)
+        protected override void Write(BigInteger value, Stream output, Endian endian, long ownerOffset)
         {
             throw new NotImplementedException();
         }

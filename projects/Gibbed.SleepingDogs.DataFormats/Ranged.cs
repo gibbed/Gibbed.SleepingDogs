@@ -66,11 +66,11 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null == true)
             {
                 return false;
             }
-            return obj is Ranged<T> && Equals((Ranged<T>)obj);
+            return obj is Ranged<T> ranged && Equals(ranged) == true;
         }
 
         public override int GetHashCode()
@@ -84,12 +84,12 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public static bool operator ==(Ranged<T> a, Ranged<T> b)
         {
-            return a.Equals(b);
+            return a.Equals(b) == true;
         }
 
         public static bool operator !=(Ranged<T> a, Ranged<T> b)
         {
-            return !(a == b);
+            return a.Equals(b) == false;
         }
     }
 }

@@ -39,16 +39,12 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
             public static T ParseValue(XPathNavigator navigator, TryParseBasicDelegate tryParse)
             {
-                T dummy;
-                if (tryParse(navigator.Value, out dummy) == false)
+                if (tryParse(navigator.Value, out T dummy) == false)
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new FormatException(
-                        string.Format("could not parse '{0}' as {1} at line {2} position {3}",
-                                      navigator.Value,
-                                      typeof(T).Name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not parse '{navigator.Value}' as {typeof(T).Name} " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
                 return dummy;
             }
@@ -62,10 +58,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new KeyNotFoundException(
-                        string.Format("could not find attribute '{0}' at line {1} position {2}",
-                                      name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not find attribute '{name}' " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
 
                 var dummy = ParseValue(navigator, tryParse);
@@ -102,11 +96,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new FormatException(
-                        string.Format("could not parse '{0}' as {1} at line {2} position {3}",
-                                      navigator.Value,
-                                      typeof(T).Name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not parse '{navigator.Value}' as {typeof(T).Name} " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
                 return dummy;
             }
@@ -121,10 +112,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new KeyNotFoundException(
-                        string.Format("could not find attribute '{0}' at line {1} position {2}",
-                                      name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not find attribute '{name}' " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
 
                 var dummy = ParseValue(navigator, tryParse, style);
@@ -161,11 +150,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new FormatException(
-                        string.Format("could not parse '{0}' as {1} at line {2} position {3}",
-                                      navigator.Value,
-                                      typeof(T).Name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not parse '{navigator.Value}' as {typeof(T).Name} " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
                 return dummy;
             }
@@ -180,10 +166,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 {
                     var lineInfo = (IXmlLineInfo)navigator;
                     throw new KeyNotFoundException(
-                        string.Format("could not find attribute '{0}' at line {1} position {2}",
-                                      name,
-                                      lineInfo.LineNumber,
-                                      lineInfo.LinePosition));
+                        $"could not find attribute '{name}' " +
+                        $"at line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
                 }
 
                 var dummy = ParseValue(navigator, tryParse, ignoreCase);
@@ -216,10 +200,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
             {
                 var lineInfo = (IXmlLineInfo)navigator;
                 throw new KeyNotFoundException(
-                    string.Format("could not find attribute '{0}' at line {1} position {2}",
-                                  name,
-                                  lineInfo.LineNumber,
-                                  lineInfo.LinePosition));
+                    $"could not find attribute '{name}' at " +
+                    $"line {lineInfo.LineNumber} position {lineInfo.LinePosition}");
             }
 
             var value = navigator.Value;

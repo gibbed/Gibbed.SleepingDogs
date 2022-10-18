@@ -42,10 +42,10 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         {
             var typeAndOffset = input.ReadValueU32(endian);
             var id = input.ReadValueU32(endian);
-            return new PropertySchema(id, (byte)(typeAndOffset >> 24), typeAndOffset & 0x00FFFFFFu);
+            return new(id, (byte)(typeAndOffset >> 24), typeAndOffset & 0x00FFFFFFu);
         }
 
-        public static void Write(Stream output, PropertySchema instance, Endian endian)
+        public static void Write(PropertySchema instance, Stream output, Endian endian)
         {
             var typeAndOffset = instance.Offset & 0x00FFFFFFu | (uint)instance.Type << 24;
             output.WriteValueU32(typeAndOffset, endian);
@@ -54,7 +54,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
 
         public PropertySetSchemaProvider()
         {
-            this._Schemas = new Dictionary<uint, PropertySetSchema>();
+            this._Schemas = new();
         }
 
         public void Add(uint name, PropertySetSchema schema)
@@ -40,12 +40,8 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
 
         public PropertySetSchema Get(uint name)
         {
-            if (this._Schemas.ContainsKey(name) == false)
-            {
-                return null;
-            }
-
-            return this._Schemas[name];
+            this._Schemas.TryGetValue(name, out var schema);
+            return schema;
         }
     }
 }

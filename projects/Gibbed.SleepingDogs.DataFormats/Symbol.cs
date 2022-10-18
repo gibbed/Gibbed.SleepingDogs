@@ -28,11 +28,11 @@ namespace Gibbed.SleepingDogs.DataFormats
 {
     public struct Symbol : IEquatable<Symbol>
     {
-        public static Symbol Invalid;
+        public static readonly Symbol Invalid;
 
         static Symbol()
         {
-            Invalid = new Symbol(0xFFFFFFFFu);
+            Invalid = new(0xFFFFFFFFu);
         }
 
         public readonly uint Id;
@@ -48,14 +48,14 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new Symbol(id);
         }
 
-        public static void Write(Stream output, Symbol instance, Endian endian)
+        public static void Write(Symbol instance, Stream output, Endian endian)
         {
             output.WriteValueU32(instance.Id, endian);
         }
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
 
         public static explicit operator uint(Symbol symbol)
@@ -70,12 +70,12 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
             {
                 return false;
             }
 
-            return obj is Symbol && Equals((Symbol)obj);
+            return obj is Symbol symbol && Equals(symbol) == true;
         }
 
         public override int GetHashCode()

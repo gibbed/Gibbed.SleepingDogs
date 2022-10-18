@@ -41,14 +41,14 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new WwiseId(id);
         }
 
-        public static void Write(Stream output, WwiseId instance, Endian endian)
+        public static void Write(WwiseId instance, Stream output, Endian endian)
         {
             output.WriteValueU32(instance.Id, endian);
         }
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
 
         public static explicit operator uint(WwiseId symbol)
@@ -63,12 +63,12 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null == true)
             {
                 return false;
             }
 
-            return obj is WwiseId && Equals((WwiseId)obj);
+            return obj is WwiseId id && Equals(id) == true;
         }
 
         public override int GetHashCode()

@@ -32,17 +32,17 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
         {
         }
 
-        protected override void Write(Stream output, DataFormats.Ranged<int> value, Endian endian, long ownerOffset)
-        {
-            output.WriteValueS32(value.Range, endian);
-            output.WriteValueS32(value.Value, endian);
-        }
-
         protected override DataFormats.Ranged<int> Read(Stream input, Endian endian)
         {
             var range = input.ReadValueS32(endian);
             var value = input.ReadValueS32(endian);
             return new DataFormats.Ranged<int>(range, value);
+        }
+
+        protected override void Write(DataFormats.Ranged<int> value, Stream output, Endian endian, long ownerOffset)
+        {
+            output.WriteValueS32(value.Range, endian);
+            output.WriteValueS32(value.Value, endian);
         }
     }
 }

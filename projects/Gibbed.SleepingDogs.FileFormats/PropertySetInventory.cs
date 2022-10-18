@@ -36,7 +36,7 @@ namespace Gibbed.SleepingDogs.FileFormats
         public PropertySetInventory()
             : base(TypeId, ChunkId)
         {
-            this._SchemaProvider = new PropertySetFormats.PropertySetSchemaProvider();
+            this._SchemaProvider = new();
         }
 
         public struct Item
@@ -60,7 +60,7 @@ namespace Gibbed.SleepingDogs.FileFormats
                     return name;
                 }
 
-                return name.Substring(0, 20) + "~" + name.Substring(name.Length - 14);
+                return $"{name.Substring(0, 20)}~{name.Substring(name.Length - 14)}";
             }
         }
 

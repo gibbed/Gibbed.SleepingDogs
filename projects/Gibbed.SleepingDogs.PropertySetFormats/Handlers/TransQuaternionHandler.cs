@@ -37,7 +37,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             return DataFormats.TransQuaternion.Read(input, endian);
         }
 
-        protected override void Write(Stream output, DataFormats.TransQuaternion value, Endian endian, long ownerOffset)
+        protected override void Write(DataFormats.TransQuaternion value, Stream output, Endian endian, long ownerOffset)
         {
             value.Write(output, endian);
         }

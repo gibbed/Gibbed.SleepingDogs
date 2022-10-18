@@ -32,11 +32,6 @@ namespace Gibbed.SleepingDogs.BigUnpack
 {
     public class Program
     {
-        private static string GetExecutableName()
-        {
-            return Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-        }
-
         public static void Main(string[] args)
         {
             bool showHelp = false;
@@ -46,7 +41,7 @@ namespace Gibbed.SleepingDogs.BigUnpack
             bool paranoia = false;
             bool verbose = false;
 
-            var options = new OptionSet()
+            OptionSet options = new()
             {
                 { "o|overwrite", "overwrite existing files", v => overwriteFiles = v != null },
                 { "nu|no-unknowns", "don't extract unknown files", v => extractUnknowns = v == null },
@@ -57,22 +52,21 @@ namespace Gibbed.SleepingDogs.BigUnpack
             };
 
             List<string> extras;
-
             try
             {
                 extras = options.Parse(args);
             }
             catch (OptionException e)
             {
-                Console.Write("{0}: ", GetExecutableName());
+                Console.Write("{0}: ", ProjectHelpers.GetExecutableName());
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try `{0} --help' for more information.", GetExecutableName());
+                Console.WriteLine("Try `{0} --help' for more information.", ProjectHelpers.GetExecutableName());
                 return;
             }
 
             if (extras.Count < 1 || extras.Count > 2 || showHelp == true)
             {
-                Console.WriteLine("Usage: {0} [OPTIONS]+ input_bix [output_dir]", GetExecutableName());
+                Console.WriteLine("Usage: {0} [OPTIONS]+ input_bix [output_dir]", ProjectHelpers.GetExecutableName());
                 Console.WriteLine();
                 Console.WriteLine("Options:");
                 options.WriteOptionDescriptions(Console.Out);
@@ -81,13 +75,13 @@ namespace Gibbed.SleepingDogs.BigUnpack
 
             string bixPath = Path.GetFullPath(extras[0]);
             string outputPath = extras.Count > 1
-                                    ? Path.GetFullPath(extras[1])
-                                    : Path.ChangeExtension(bixPath, null) + "_unpack";
+                ? Path.GetFullPath(extras[1])
+                : Path.ChangeExtension(bixPath, null) + "_unpack";
 
             Regex filter = null;
             if (string.IsNullOrEmpty(filterPattern) == false)
             {
-                filter = new Regex(filterPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                filter = new(filterPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             }
 
             var projectPath = ProjectHelpers.GetProjectPath();
@@ -111,7 +105,7 @@ namespace Gibbed.SleepingDogs.BigUnpack
 
             var hashes = project.LoadListsBigNames();
 
-            var bix = new BigFileInventory();
+            BigFileInventory bix = new();
             using (var input = File.OpenRead(bixPath))
             {
                 bix.Deserialize(input, Endian.Little);
@@ -226,11 +220,13 @@ namespace Gibbed.SleepingDogs.BigUnpack
                         }
                         else
                         {
-                            var uncompressedSize = entry.Size.CompressedSize +
-                                                   entry.Size.LoadOffset -
-                                                   entry.Size.CompressedExtra;
+                            var uncompressedSize =
+                                entry.Size.CompressedSize +
+                                entry.Size.LoadOffset -
+                                entry.Size.CompressedExtra;
                             if (uncompressedSize != entry.Size.UncompressedSize)
                             {
+                                throw new InvalidOperationException();
                             }
 
                             if (entry.Size.UncompressedSize > 0)

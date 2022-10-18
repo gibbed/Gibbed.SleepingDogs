@@ -34,7 +34,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public static Chunk Read(Stream input, Endian endian)
         {
-            var instance = new Chunk();
+            Chunk instance;
             instance.Id = input.ReadValueU32(endian);
             instance.ChunkSize = input.ReadValueS32(endian);
             instance.DataSize = input.ReadValueS32(endian);
@@ -42,7 +42,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return instance;
         }
 
-        public static void Write(Stream output, Chunk instance, Endian endian)
+        public static void Write(Chunk instance, Stream output, Endian endian)
         {
             output.WriteValueU32(instance.Id, endian);
             output.WriteValueS32(instance.ChunkSize, endian);
@@ -52,7 +52,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

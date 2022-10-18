@@ -37,7 +37,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             return DataFormats.Symbol.Read(input, endian);
         }
 
-        protected override void Write(Stream output, DataFormats.Symbol value, Endian endian, long ownerOffset)
+        protected override void Write(DataFormats.Symbol value, Stream output, Endian endian, long ownerOffset)
         {
             value.Write(output, endian);
         }

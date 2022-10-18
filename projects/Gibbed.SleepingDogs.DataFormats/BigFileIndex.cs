@@ -132,14 +132,14 @@ namespace Gibbed.SleepingDogs.DataFormats
 
             internal static Entry Read(Stream input, Endian endian)
             {
-                var instance = new Entry();
+                Entry instance;
                 instance.Id = input.ReadValueU32(endian);
                 instance.Offset = input.ReadValueU32(endian);
                 instance.Size = BigFileSize.Read(input, endian);
                 return instance;
             }
 
-            public static void Write(Stream output, Entry instance, Endian endian)
+            public static void Write(Entry instance, Stream output, Endian endian)
             {
                 output.WriteValueU32(instance.Id, endian);
                 output.WriteValueU32(instance.Offset, endian);
@@ -148,7 +148,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
             public void Write(Stream output, Endian endian)
             {
-                Write(output, this, endian);
+                Write(this, output, endian);
             }
         }
     }

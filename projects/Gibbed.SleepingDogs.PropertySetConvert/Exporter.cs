@@ -46,7 +46,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
             Directory.CreateDirectory(outputPath);
 
-            var inventory = new PropertySetInventory();
+            PropertySetInventory inventory = new();
             using (var input = File.OpenRead(inputPath))
             {
                 inventory.Deserialize(input, Endian.Little);
@@ -60,7 +60,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 }
             }
 
-            var settings = new XmlWriterSettings
+            XmlWriterSettings settings = new()
             {
                 Indent = true,
                 IndentChars = "\t",
@@ -81,11 +81,8 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                         if ((uint)item.Name.HashSymbol() != item.Id)
                         {
                             // todo: make this look up correct names from lists
-                            Console.WriteLine(
-                                "Hash of {0:X8} doesn't match hash of '{1}' -- name probably got truncated!",
-                                item.Id,
-                                item.Name);
-                            xmlName = string.Format(@"__TRUNCATED\{0}_{1:X8}.xml", item.Name, item.Id);
+                            Console.WriteLine($"Hash of {item.Id:X8} doesn't match hash of '{item.Name}' -- name probably got truncated!");
+                            xmlName = $@"__TRUNCATED\{item.Name}_{item.Id:X8}.xml";
                         }
                         else
                         {

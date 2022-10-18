@@ -65,10 +65,10 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 throw new InvalidOperationException();
             }
 
-            var resources = new List<Tuple<string, string, DataFormats.PropertySetResourceFlags>>();
+            List<(string path, string name, DataFormats.PropertySetResourceFlags flags)> resources = new();
             using (var xml = File.OpenRead(xmlPath))
             {
-                var doc = new XPathDocument(xml);
+                XPathDocument doc = new(xml);
                 var nav = doc.CreateNavigator();
                 var root = nav.SelectSingleNode("Resources");
                 if (root == null)
@@ -83,11 +83,11 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                     var name = rawResource.ParseAttributeString("name");
                     var flags = rawResource.ParseAttributeEnum<DataFormats.PropertySetResourceFlags>("flags");
                     var path = rawResource.Value;
-                    resources.Add(new Tuple<string, string, DataFormats.PropertySetResourceFlags>(path, name, flags));
+                    resources.Add((path, name, flags));
                 }
             }
 
-            var inventory = new PropertySetInventory();
+            PropertySetInventory inventory = new();
             foreach (var resource in resources)
             {
                 var itemPath = Path.Combine(inputPath, resource.Item1);
@@ -95,7 +95,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 PropertySetFormats.PropertySet propertySet;
                 using (var xml = File.OpenRead(itemPath))
                 {
-                    var doc = new XPathDocument(xml);
+                    XPathDocument doc = new(xml);
                     var nav = doc.CreateNavigator();
 
                     var root = nav.SelectSingleNode("Resource");
@@ -143,7 +143,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
         {
             var dataSize = nav.ParseAttributeUInt16("datasize");
 
-            var properties = new List<PropertySetFormats.PropertySchema>();
+            List<PropertySetFormats.PropertySchema> properties = new();
             var rawProperties = nav.Select("PropertySchema");
             while (rawProperties.MoveNext() == true)
             {
@@ -173,7 +173,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
                 throw new InvalidOperationException();
             }
 
-            var instance = new PropertySetFormats.PropertySet();
+            PropertySetFormats.PropertySet instance = new();
             instance.DefinedSchema = definedSchema;
 
             instance.Name = root.ParseAttributeSymbol("name");
@@ -198,8 +198,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
             while (rawParents.MoveNext() == true)
             {
                 var rawParent = rawParents.Current;
-                uint dummy;
-                if (Helpers.TryParseSymbol(rawParent.Value, out dummy) == false)
+                if (Helpers.TryParseSymbol(rawParent.Value, out uint dummy) == false)
                 {
                     throw new FormatException("failed to parse parent");
                 }
@@ -230,7 +229,7 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
 
         private static PropertySetFormats.PropertyList ReadPropertyList(XPathNavigator nav, object parent)
         {
-            var instance = new PropertySetFormats.PropertyList();
+            PropertySetFormats.PropertyList instance = new();
 
             instance.Flags = nav.ParseAttributeEnum("flags", DataFormats.PropertyCollectionFlags.None);
             instance.Flags &= _NonSetListMask;
@@ -274,204 +273,115 @@ namespace Gibbed.SleepingDogs.PropertySetConvert
         private static object ParseProperty(XPathNavigator nav, object parent)
         {
             var type = nav.ParseAttributeString("type");
-            object value;
-            switch (type)
+            return type switch
             {
-                case "Float32":
-                {
-                    value = nav.ParseValueFloat32();
-                    break;
-                }
+                "Float32" => nav.ParseValueFloat32(),
+                "Int8" => nav.ParseValueInt8(),
+                "Int16" => nav.ParseValueInt16(),
+                "Int32" => nav.ParseValueInt32(),
+                "Int64" => nav.ParseValueInt64(),
+                "UInt8" => nav.ParseValueUInt8(),
+                "UInt16" => nav.ParseValueUInt16(),
+                "UInt32" => nav.ParseValueUInt32(),
+                "UInt64" => nav.ParseValueUInt64(),
+                "Boolean" => nav.ParseValueBoolean(),
+                "String" => nav.Value,
+                "Symbol" => nav.ParseValueSymbol(),
+                "SymbolUC" => nav.ParseValueSymbolUpperCase(),
+                "WwiseID" => nav.ParseValueWwiseId(),
+                "Vector2" => ParseVector2(nav),
+                "Vector3" => ParseVector3(nav),
+                "Vector4" => ParseVector4(nav),
+                "TransQuat" => ParseTransQuat(nav),
+                "Matrix44" => ParseMatrix44(nav),
+                "Int32Ranged" => ParseInt32Ranged(nav),
+                "WeightedListProperty" => throw new NotSupportedException(),
+                "Float32Ranged" => ParseFloat32Ranged(nav),
+                "List" => ReadPropertyList(nav, parent),
+                "PropSet" => ReadPropertySet(nav, parent),
+                _ => throw new NotImplementedException(),
+            };
+        }
 
-                case "Int8":
-                {
-                    value = nav.ParseValueInt8();
-                    break;
-                }
+        private static object ParseVector2(XPathNavigator nav)
+        {
+            var x = nav.ParseAttributeFloat32("x");
+            var y = nav.ParseAttributeFloat32("y");
+            return new DataFormats.Vector2(x, y);
+        }
 
-                case "Int16":
-                {
-                    value = nav.ParseValueInt16();
-                    break;
-                }
+        private static object ParseVector3(XPathNavigator nav)
+        {
+            var x = nav.ParseAttributeFloat32("x");
+            var y = nav.ParseAttributeFloat32("y");
+            var z = nav.ParseAttributeFloat32("z");
+            return new DataFormats.Vector3(x, y, z);
+        }
 
-                case "Int32":
-                {
-                    value = nav.ParseValueInt32();
-                    break;
-                }
+        private static object ParseVector4(XPathNavigator nav)
+        {
+            var x = nav.ParseAttributeFloat32("x");
+            var y = nav.ParseAttributeFloat32("y");
+            var z = nav.ParseAttributeFloat32("z");
+            var w = nav.ParseAttributeFloat32("w");
+            return new DataFormats.Vector4(x, y, z, w);
+        }
 
-                case "Int64":
-                {
-                    value = nav.ParseValueInt64();
-                    break;
-                }
+        private static object ParseTransQuat(XPathNavigator nav)
+        {
+            var tx = nav.ParseAttributeFloat32("tx");
+            var ty = nav.ParseAttributeFloat32("ty");
+            var tz = nav.ParseAttributeFloat32("tz");
+            var rx = nav.ParseAttributeFloat32("rx");
+            var ry = nav.ParseAttributeFloat32("ry");
+            var rz = nav.ParseAttributeFloat32("rz");
+            var rw = nav.ParseAttributeFloat32("rw");
+            return new DataFormats.TransQuaternion(
+                new(rx, ry, rz, rw),
+                new(tx, ty, tz));
+        }
 
-                case "UInt8":
-                {
-                    value = nav.ParseValueUInt8();
-                    break;
-                }
+        private static object ParseMatrix44(XPathNavigator nav)
+        {
+            var v0 = nav.SelectSingleNode("V0");
+            var v0X = v0.ParseAttributeFloat32("x");
+            var v0Y = v0.ParseAttributeFloat32("y");
+            var v0Z = v0.ParseAttributeFloat32("z");
+            var v0W = v0.ParseAttributeFloat32("w");
+            var v1 = nav.SelectSingleNode("V1");
+            var v1X = v1.ParseAttributeFloat32("x");
+            var v1Y = v1.ParseAttributeFloat32("y");
+            var v1Z = v1.ParseAttributeFloat32("z");
+            var v1W = v1.ParseAttributeFloat32("w");
+            var v2 = nav.SelectSingleNode("V2");
+            var v2X = v2.ParseAttributeFloat32("x");
+            var v2Y = v2.ParseAttributeFloat32("y");
+            var v2Z = v2.ParseAttributeFloat32("z");
+            var v2W = v2.ParseAttributeFloat32("w");
+            var v3 = nav.SelectSingleNode("V3");
+            var v3X = v3.ParseAttributeFloat32("x");
+            var v3Y = v3.ParseAttributeFloat32("y");
+            var v3Z = v3.ParseAttributeFloat32("z");
+            var v3W = v3.ParseAttributeFloat32("w");
+            return new DataFormats.Matrix44(
+                new(v0X, v0Y, v0Z, v0W),
+                new(v1X, v1Y, v1Z, v1W),
+                new(v2X, v2Y, v2Z, v2W),
+                new(v3X, v3Y, v3Z, v3W));
+        }
 
-                case "UInt16":
-                {
-                    value = nav.ParseValueUInt16();
-                    break;
-                }
+        private static object ParseInt32Ranged(XPathNavigator nav)
+        {
+            var range = nav.ParseAttributeInt32("range");
+            var dummy = nav.ParseValueInt32();
+            return new DataFormats.Ranged<int>(range, dummy);
+        }
 
-                case "UInt32":
-                {
-                    value = nav.ParseValueUInt32();
-                    break;
-                }
-
-                case "UInt64":
-                {
-                    value = nav.ParseValueUInt64();
-                    break;
-                }
-
-                case "Boolean":
-                {
-                    value = nav.ParseValueBoolean();
-                    break;
-                }
-
-                case "String":
-                {
-                    value = nav.Value;
-                    break;
-                }
-
-                case "Symbol":
-                {
-                    value = nav.ParseValueSymbol();
-                    break;
-                }
-
-                case "SymbolUC":
-                {
-                    value = nav.ParseValueSymbolUpperCase();
-                    break;
-                }
-
-                case "WwiseID":
-                {
-                    value = nav.ParseValueWwiseId();
-                    break;
-                }
-
-                case "Vector2":
-                {
-                    var x = nav.ParseAttributeFloat32("x");
-                    var y = nav.ParseAttributeFloat32("y");
-                    value = new DataFormats.Vector2(x, y);
-                    break;
-                }
-
-                case "Vector3":
-                {
-                    var x = nav.ParseAttributeFloat32("x");
-                    var y = nav.ParseAttributeFloat32("y");
-                    var z = nav.ParseAttributeFloat32("z");
-                    value = new DataFormats.Vector3(x, y, z);
-                    break;
-                }
-
-                case "Vector4":
-                {
-                    var x = nav.ParseAttributeFloat32("x");
-                    var y = nav.ParseAttributeFloat32("y");
-                    var z = nav.ParseAttributeFloat32("z");
-                    var w = nav.ParseAttributeFloat32("w");
-                    value = new DataFormats.Vector4(x, y, z, w);
-                    break;
-                }
-
-                case "TransQuat":
-                {
-                    var tx = nav.ParseAttributeFloat32("tx");
-                    var ty = nav.ParseAttributeFloat32("ty");
-                    var tz = nav.ParseAttributeFloat32("tz");
-                    var rx = nav.ParseAttributeFloat32("rx");
-                    var ry = nav.ParseAttributeFloat32("ry");
-                    var rz = nav.ParseAttributeFloat32("rz");
-                    var rw = nav.ParseAttributeFloat32("rw");
-                    var transform = new DataFormats.Vector3(tx, ty, tz);
-                    var rotation = new DataFormats.Quaternion(rx, ry, rz, rw);
-                    value = new DataFormats.TransQuaternion(rotation, transform);
-                    break;
-                }
-
-                case "Matrix44":
-                {
-                    var v0 = nav.SelectSingleNode("V0");
-                    var v0X = v0.ParseAttributeFloat32("x");
-                    var v0Y = v0.ParseAttributeFloat32("y");
-                    var v0Z = v0.ParseAttributeFloat32("z");
-                    var v0W = v0.ParseAttributeFloat32("w");
-                    var v1 = nav.SelectSingleNode("V1");
-                    var v1X = v1.ParseAttributeFloat32("x");
-                    var v1Y = v1.ParseAttributeFloat32("y");
-                    var v1Z = v1.ParseAttributeFloat32("z");
-                    var v1W = v1.ParseAttributeFloat32("w");
-                    var v2 = nav.SelectSingleNode("V2");
-                    var v2X = v2.ParseAttributeFloat32("x");
-                    var v2Y = v2.ParseAttributeFloat32("y");
-                    var v2Z = v2.ParseAttributeFloat32("z");
-                    var v2W = v2.ParseAttributeFloat32("w");
-                    var v3 = nav.SelectSingleNode("V3");
-                    var v3X = v3.ParseAttributeFloat32("x");
-                    var v3Y = v3.ParseAttributeFloat32("y");
-                    var v3Z = v3.ParseAttributeFloat32("z");
-                    var v3W = v3.ParseAttributeFloat32("w");
-                    value = new DataFormats.Matrix44(
-                        new DataFormats.Vector4(v0X, v0Y, v0Z, v0W),
-                        new DataFormats.Vector4(v1X, v1Y, v1Z, v1W),
-                        new DataFormats.Vector4(v2X, v2Y, v2Z, v2W),
-                        new DataFormats.Vector4(v3X, v3Y, v3Z, v3W));
-                    break;
-                }
-
-                case "Int32Ranged":
-                {
-                    var range = nav.ParseAttributeInt32("range");
-                    var dummy = nav.ParseValueInt32();
-                    value = new DataFormats.Ranged<int>(range, dummy);
-                    break;
-                }
-
-                case "WeightedListProperty":
-                {
-                    throw new NotSupportedException();
-                }
-
-                case "Float32Ranged":
-                {
-                    var range = nav.ParseAttributeFloat32("range");
-                    var dummy = nav.ParseValueFloat32();
-                    value = new DataFormats.Ranged<float>(range, dummy);
-                    break;
-                }
-
-                case "List":
-                {
-                    value = ReadPropertyList(nav, parent);
-                    break;
-                }
-
-                case "PropSet":
-                {
-                    value = ReadPropertySet(nav, parent);
-                    break;
-                }
-
-                default:
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            return value;
+        private static object ParseFloat32Ranged(XPathNavigator nav)
+        {
+            var range = nav.ParseAttributeFloat32("range");
+            var dummy = nav.ParseValueFloat32();
+            return new DataFormats.Ranged<float>(range, dummy);
         }
     }
 }

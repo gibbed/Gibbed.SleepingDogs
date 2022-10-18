@@ -63,8 +63,8 @@ namespace Gibbed.SleepingDogs.FileFormats
                 Id = resource.Id,
                 DebugName = resource.DebugName,
                 Data = resource.CompressedSize != 0
-                           ? QuickCompression.Decompress(stream)
-                           : stream.ReadBytes(resource.UncompressedSize)
+                    ? QuickCompression.Decompress(stream)
+                    : stream.ReadBytes(resource.UncompressedSize)
             };
         }
     }

@@ -31,11 +31,6 @@ namespace Gibbed.SleepingDogs.XmlUnpack
 {
     public class Program
     {
-        private static string GetExecutableName()
-        {
-            return Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-        }
-
         public static void Main(string[] args)
         {
             bool showHelp = false;
@@ -43,7 +38,7 @@ namespace Gibbed.SleepingDogs.XmlUnpack
             bool paranoia = false;
             bool verbose = false;
 
-            var options = new OptionSet()
+            OptionSet options = new()
             {
                 { "o|overwrite", "overwrite existing files", v => overwriteFiles = v != null },
                 { "p|paranoid", "be paranoid (validate hash when uncompressing files)", v => paranoia = v != null },
@@ -52,22 +47,21 @@ namespace Gibbed.SleepingDogs.XmlUnpack
             };
 
             List<string> extras;
-
             try
             {
                 extras = options.Parse(args);
             }
             catch (OptionException e)
             {
-                Console.Write("{0}: ", GetExecutableName());
+                Console.Write("{0}: ", ProjectHelpers.GetExecutableName());
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try `{0} --help' for more information.", GetExecutableName());
+                Console.WriteLine("Try `{0} --help' for more information.", ProjectHelpers.GetExecutableName());
                 return;
             }
 
             if (extras.Count < 1 || extras.Count > 2 || showHelp == true)
             {
-                Console.WriteLine("Usage: {0} [OPTIONS]+ input_bin [output_dir]", GetExecutableName());
+                Console.WriteLine("Usage: {0} [OPTIONS]+ input_bin [output_dir]", ProjectHelpers.GetExecutableName());
                 Console.WriteLine();
                 Console.WriteLine("Options:");
                 options.WriteOptionDescriptions(Console.Out);
@@ -98,7 +92,7 @@ namespace Gibbed.SleepingDogs.XmlUnpack
 
             var hashes = project.LoadListsXmlNames();
 
-            var inventory = new XmlFileInventory();
+            XmlFileInventory inventory = new();
             using (var input = File.OpenRead(inputPath))
             {
                 inventory.Deserialize(input, Endian.Little);
@@ -118,11 +112,8 @@ namespace Gibbed.SleepingDogs.XmlUnpack
                     if (path.HashFileName() != item.Id)
                     {
                         // todo: make this look up correct names from lists
-                        Console.WriteLine(
-                            "Hash of {0:X8} doesn't match hash of '{1}' -- name probably got truncated!",
-                            item.Id,
-                            item.DebugName);
-                        path = string.Format(@"__TRUNCATED\{0}_{1:X8}", item.DebugName, item.Id);
+                        Console.WriteLine($"Hash of {item.Id:X8} doesn't match hash of '{item.DebugName}' -- name probably got truncated!");
+                        path = $@"__TRUNCATED\{item.DebugName}_{item.Id:X8}";
                     }
                 }
                 else
@@ -130,8 +121,8 @@ namespace Gibbed.SleepingDogs.XmlUnpack
                     path = hashes[item.Id];
                 }
 
-                path = path.Replace("/", "\\");
-                if (path.StartsWith("\\") == true)
+                path = path.Replace(@"/", @"\");
+                if (path.StartsWith(@"\") == true)
                 {
                     path = path.Substring(1);
                 }
@@ -150,7 +141,7 @@ namespace Gibbed.SleepingDogs.XmlUnpack
 
                 if (verbose == true)
                 {
-                    Console.WriteLine("[{0}/{1}] {2}", current, total, path);
+                    Console.WriteLine($"[{current}/{total}] {path}");
                 }
 
                 using (var output = File.Create(entryPath))

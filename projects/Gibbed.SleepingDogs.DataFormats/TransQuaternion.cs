@@ -43,7 +43,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             return new TransQuaternion(rotation, transform);
         }
 
-        public static void Write(Stream output, TransQuaternion instance, Endian endian)
+        public static void Write(TransQuaternion instance, Stream output, Endian endian)
         {
             instance.Rotation.Write(output, endian);
             instance.Transform.Write(output, endian);
@@ -51,7 +51,7 @@ namespace Gibbed.SleepingDogs.DataFormats
 
         public void Write(Stream output, Endian endian)
         {
-            Write(output, this, endian);
+            Write(this, output, endian);
         }
     }
 }

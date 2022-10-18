@@ -37,7 +37,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             return DataFormats.WwiseId.Read(input, endian);
         }
 
-        protected override void Write(Stream output, DataFormats.WwiseId value, Endian endian, long ownerOffset)
+        protected override void Write(DataFormats.WwiseId value, Stream output, Endian endian, long ownerOffset)
         {
             value.Write(output, endian);
         }

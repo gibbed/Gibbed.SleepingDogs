@@ -42,7 +42,7 @@ namespace Gibbed.SleepingDogs.FileFormats
 
         public BigFileInventory()
         {
-            this._Entries = new List<DataFormats.BigFileIndex.Entry>();
+            this._Entries = new();
         }
 
         #region Properties
@@ -64,10 +64,7 @@ namespace Gibbed.SleepingDogs.FileFormats
             set { this._SortKey = value; }
         }
 
-        public List<DataFormats.BigFileIndex.Entry> Entries
-        {
-            get { return this._Entries; }
-        }
+        public List<DataFormats.BigFileIndex.Entry> Entries => this._Entries;
 
         public string BigFileName
         {
@@ -93,8 +90,8 @@ namespace Gibbed.SleepingDogs.FileFormats
             {
                 var basePosition = chunk.DataOffset;
                 data.Position = basePosition;
-                
-                var index = new DataFormats.BigFileIndex();
+
+                DataFormats.BigFileIndex index = new();
                 index.Deserialize(data, endian);
 
                 if (index.TypeId != TypeId)

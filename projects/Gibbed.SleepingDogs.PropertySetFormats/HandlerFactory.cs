@@ -97,7 +97,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         {
             if (xmlTag == null)
             {
-                throw new ArgumentNullException("xmlTag");
+                throw new ArgumentNullException(nameof(xmlTag));
             }
 
             if (_HandlersByXmlTag.ContainsKey(xmlTag) == false)
@@ -118,7 +118,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (_HandlersByType.ContainsKey(type) == false)

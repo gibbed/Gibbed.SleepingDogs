@@ -38,7 +38,7 @@ namespace Gibbed.SleepingDogs.FileFormats
         {
             this._TypeId = typeId;
             this._ChunkId = chunkId;
-            this._Items = new List<TItem>();
+            this._Items = new();
         }
 
         public List<TItem> Items
@@ -50,11 +50,11 @@ namespace Gibbed.SleepingDogs.FileFormats
         {
             foreach (var item in this._Items)
             {
-                using (var data = new MemoryStream())
+                using (MemoryStream data = new())
                 {
                     var startPosition = data.Position;
 
-                    var resource = new TResource();
+                    TResource resource = new();
                     resource.TypeId = this._TypeId;
 
                     data.Position = resource.Size;
@@ -72,7 +72,7 @@ namespace Gibbed.SleepingDogs.FileFormats
 
                     data.SetLength(data.Length.Align(16));
 
-                    var chunk = new DataFormats.Chunk();
+                    DataFormats.Chunk chunk = new();
                     chunk.Id = this._ChunkId;
                     chunk.ChunkSize = chunk.DataSize = (int)data.Length;
                     chunk.Write(output, endian);
@@ -99,7 +99,7 @@ namespace Gibbed.SleepingDogs.FileFormats
                 {
                     data.Position = chunk.DataOffset;
 
-                    var resource = new TResource();
+                    TResource resource = new();
                     resource.Deserialize(data, endian);
 
                     if (resource.TypeId != this._TypeId)

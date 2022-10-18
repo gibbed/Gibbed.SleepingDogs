@@ -92,15 +92,15 @@ namespace Gibbed.SleepingDogs.PropertySetFormats
         protected abstract T Read(Stream input, Endian endian);
 
         void IHandler.Write(
-            Stream output,
             object value,
-            Endian endian,
+            Stream output,
             long ownerOffset,
+            Endian endian,
             PropertySetSchemaProvider schemaProvider)
         {
-            this.Write(output, (T)value, endian, ownerOffset);
+            this.Write((T)value, output, endian, ownerOffset);
         }
 
-        protected abstract void Write(Stream output, T value, Endian endian, long ownerOffset);
+        protected abstract void Write(T value, Stream output, Endian endian, long ownerOffset);
     }
 }

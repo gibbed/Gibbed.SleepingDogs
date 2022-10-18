@@ -38,7 +38,7 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             throw new NotImplementedException();
         }
 
-        protected override void Write(Stream output, DataFormats.ResourceHandle value, Endian endian, long ownerOffset)
+        protected override void Write(DataFormats.ResourceHandle value, Stream output, Endian endian, long ownerOffset)
         {
             throw new NotImplementedException();
         }

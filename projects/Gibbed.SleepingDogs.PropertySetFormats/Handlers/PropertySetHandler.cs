@@ -70,10 +70,10 @@ namespace Gibbed.SleepingDogs.PropertySetFormats.Handlers
             return PropertySet.Read(input, resource, endian, schemaProvider);
         }
 
-        public void Write(Stream output, object value, Endian endian, long ownerOffset, PropertySetSchemaProvider schemaProvider)
+        public void Write(object value, Stream output, long ownerOffset, Endian endian, PropertySetSchemaProvider schemaProvider)
         {
             var startPosition = output.Position;
-            var resource = new DataFormats.PropertySet();
+            DataFormats.PropertySet resource = new();
             output.Position += resource.Size;
 
             ((PropertySet)value).Write(output, endian, resource, startPosition, schemaProvider);

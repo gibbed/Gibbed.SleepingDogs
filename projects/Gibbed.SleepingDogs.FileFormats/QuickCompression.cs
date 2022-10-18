@@ -32,8 +32,7 @@ namespace Gibbed.SleepingDogs.FileFormats
 
         public static void Decompress(Stream input, Stream output)
         {
-            ulong dummy;
-            Decompress(input, out dummy, output);
+            Decompress(input, out _, output);
         }
 
         public static void Decompress(Stream input, out ulong hash, Stream output)
@@ -44,8 +43,7 @@ namespace Gibbed.SleepingDogs.FileFormats
 
         public static byte[] Decompress(Stream input)
         {
-            ulong dummy;
-            return Decompress(input, out dummy);
+            return Decompress(input, out _);
         }
 
         public static byte[] Decompress(Stream input, out ulong hash)
