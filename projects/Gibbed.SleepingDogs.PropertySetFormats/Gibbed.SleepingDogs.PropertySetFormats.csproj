@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <Company>Gibbed</Company>
+    <Authors>Gibbed</Authors>
+    <Description>https://gib.me/</Description>
+    <Copyright>Copyright © Gibbed 2022</Copyright>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(GibbedSleepingDogs_TargetFrameworksToBuild)' == '' ">
+    <GibbedSleepingDogs_TargetFrameworksToBuild>$(TargetFrameworksToBuild)</GibbedSleepingDogs_TargetFrameworksToBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(GibbedSleepingDogs_TargetFrameworksToBuild)' == '' ">
+    <TargetFrameworks>net48</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(GibbedSleepingDogs_TargetFrameworksToBuild)' != '' ">
+    <TargetFrameworks>$(GibbedSleepingDogs_TargetFrameworksToBuild)</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gibbed.IO\Gibbed.IO.csproj" />
+    <ProjectReference Include="..\Gibbed.SleepingDogs.DataFormats\Gibbed.SleepingDogs.DataFormats.csproj" />
+  </ItemGroup>
+</Project>
