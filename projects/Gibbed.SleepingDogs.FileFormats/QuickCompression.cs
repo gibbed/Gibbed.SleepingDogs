@@ -30,23 +30,23 @@ namespace Gibbed.SleepingDogs.FileFormats
     {
         public const uint Signature = 0x51434D50; // 'QCMP'
 
-        public static void Decompress(Stream input, Stream output)
+        public static void Decompress(Stream input, Stream output, long maxLength)
         {
-            Decompress(input, out _, output);
+            Decompress(input, out _, output, maxLength);
         }
 
-        public static void Decompress(Stream input, out ulong hash, Stream output)
+        public static void Decompress(Stream input, out ulong hash, Stream output, long maxLength)
         {
-            var data = Decompress(input, out hash);
+            var data = Decompress(input, out hash, maxLength);
             output.WriteBytes(data);
         }
 
-        public static byte[] Decompress(Stream input)
+        public static byte[] Decompress(Stream input, long maxLength)
         {
-            return Decompress(input, out _);
+            return Decompress(input, out _, maxLength);
         }
 
-        public static byte[] Decompress(Stream input, out ulong hash)
+        public static byte[] Decompress(Stream input, out ulong hash, long maxLength)
         {
             var magic = input.ReadValueU32(Endian.Little);
             if (magic != Signature && magic.Swap() != Signature)
@@ -74,20 +74,25 @@ namespace Gibbed.SleepingDogs.FileFormats
                 throw new FormatException();
             }
 
+            if (maxLength > uncompressedSize)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxLength));
+            }
+
             var compressedBytes = input.ReadBytes((int)(compressedSize - dataOffset));
-            var uncompressedBytes = new byte[uncompressedSize];
+            var uncompressedBytes = new byte[maxLength];
 
             var lengths = new ushort[32];
             var offsets = new ushort[32];
 
             int x = 0, y = 0, z = 0;
-            for (; y < uncompressedSize;)
+            for (; y < maxLength;)
             {
                 var op = compressedBytes[x++];
 
                 if (op < 32)
                 {
-                    var length = op + 1;
+                    var length = (int)Math.Min(op + 1, maxLength - y);
                     Array.Copy(compressedBytes, x, uncompressedBytes, y, length);
                     x += length;
                     y += length;
@@ -113,7 +118,7 @@ namespace Gibbed.SleepingDogs.FileFormats
                         z = (z + 1) % 32;
                     }
 
-                    for (int i = 0, j = y - offset; i < length; i++, j++)
+                    for (int i = 0, j = y - offset; i < length && y < maxLength; i++, j++)
                     {
                         uncompressedBytes[y] = uncompressedBytes[j];
                         y++;
@@ -121,7 +126,7 @@ namespace Gibbed.SleepingDogs.FileFormats
                 }
             }
 
-            if (y != uncompressedSize)
+            if (y != maxLength)
             {
                 throw new InvalidOperationException();
             }

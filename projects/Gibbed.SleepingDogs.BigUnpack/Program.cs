@@ -24,9 +24,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using Gibbed.SleepingDogs.FileFormats;
 using Gibbed.IO;
+using Gibbed.SleepingDogs.FileFormats;
 using NDesk.Options;
+using BigFileIndex = Gibbed.SleepingDogs.DataFormats.BigFileIndex;
 
 namespace Gibbed.SleepingDogs.BigUnpack
 {
@@ -140,29 +141,15 @@ namespace Gibbed.SleepingDogs.BigUnpack
 
                         // detect type
                         {
-                            var guess = new byte[64];
-                            int read = 0;
-
-                            var offset = (entry.Offset << 2) + (entry.Size.LoadOffset & 0xFFF);
-                            if (entry.Size.CompressedSize == 0)
+                            var guessLength = (int)Math.Min(entry.Size.UncompressedSize, 64);
+                            byte[] guess;
+                            using (var temp = new MemoryStream())
                             {
-                                if (entry.Size.UncompressedSize > 0)
-                                {
-                                    input.Seek(offset, SeekOrigin.Begin);
-                                    read = input.Read(guess, 0, (int)Math.Min(entry.Size.UncompressedSize, guess.Length));
-                                }
+                                LoadEntry(input, entry, temp, guessLength);
+                                temp.Flush();
+                                guess = temp.ToArray();
                             }
-                            else
-                            {
-                                input.Seek(offset, SeekOrigin.Begin);
-
-                                // todo: don't uncompress everything
-                                var uncompressedData = QuickCompression.Decompress(input);
-                                read = Math.Min(guess.Length, uncompressedData.Length);
-                                Array.Copy(uncompressedData, 0, guess, 0, read);
-                            }
-
-                            extension = FileDetection.Detect(guess, Math.Min(guess.Length, read));
+                            extension = FileDetection.Detect(guess, guess.Length);
                         }
 
                         name = entry.Id.ToString("X8");
@@ -204,38 +191,53 @@ namespace Gibbed.SleepingDogs.BigUnpack
 
                     using (var output = File.Create(entryPath))
                     {
-                        if (entry.Size.CompressedSize == 0)
-                        {
-                            if (entry.Size.LoadOffset != 0 ||
-                                entry.Size.CompressedExtra != 0)
-                            {
-                                throw new InvalidOperationException();
-                            }
-
-                            if (entry.Size.UncompressedSize > 0)
-                            {
-                                input.Seek(entry.Offset << 2, SeekOrigin.Begin);
-                                output.WriteFromStream(input, entry.Size.UncompressedSize);
-                            }
-                        }
-                        else
-                        {
-                            var uncompressedSize =
-                                entry.Size.CompressedSize +
-                                entry.Size.LoadOffset -
-                                entry.Size.CompressedExtra;
-                            if (uncompressedSize != entry.Size.UncompressedSize)
-                            {
-                                throw new InvalidOperationException();
-                            }
-
-                            if (entry.Size.UncompressedSize > 0)
-                            {
-                                input.Seek((entry.Offset << 2) + (entry.Size.LoadOffset & 0xFFF), SeekOrigin.Begin);
-                                QuickCompression.Decompress(input, output);
-                            }
-                        }
+                        LoadEntry(input, entry, output);
                     }
+                }
+            }
+        }
+
+        private static void LoadEntry(Stream input, BigFileIndex.Entry entry, Stream output)
+        {
+            LoadEntry(input, entry, output, entry.Size.UncompressedSize);
+        }
+
+        private static void LoadEntry(Stream input, BigFileIndex.Entry entry, Stream output, long length)
+        {
+            if (length > entry.Size.UncompressedSize)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            if (entry.Size.CompressedSize == 0 ||
+                entry.Size.CompressedSize == entry.Size.UncompressedSize)
+            {
+                if (entry.Size.LoadOffset != 0 || entry.Size.CompressedExtra != 0)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                if (length > 0)
+                {
+                    input.Position = entry.Offset;
+                    output.WriteFromStream(input, length);
+                }
+            }
+            else
+            {
+                var uncompressedSize =
+                    entry.Size.CompressedSize +
+                    entry.Size.LoadOffset -
+                    entry.Size.CompressedExtra;
+                if (uncompressedSize != entry.Size.UncompressedSize)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                if (length > 0)
+                {
+                    input.Position = entry.Offset + (entry.Size.LoadOffset & 0xFFF);
+                    QuickCompression.Decompress(input, output, length);
                 }
             }
         }

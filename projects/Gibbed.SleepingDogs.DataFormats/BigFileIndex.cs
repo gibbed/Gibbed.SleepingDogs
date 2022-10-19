@@ -127,14 +127,36 @@ namespace Gibbed.SleepingDogs.DataFormats
         public struct Entry
         {
             public uint Id;
-            public uint Offset;
+            public uint OffsetRaw;
             public BigFileSize Size;
+
+            public long Offset
+            {
+                get { return ((long)this.OffsetRaw) << 2; }
+                set
+                {
+                    if (value < 0)
+                    {
+                        throw new ArgumentOutOfRangeException("offset cannot be negative", nameof(value));
+                    }
+                    if ((value & 3) != 0)
+                    {
+                        throw new ArgumentOutOfRangeException("offset must be aligned", nameof(value));
+                    }
+                    value >>= 2;
+                    if (value > uint.MaxValue)
+                    {
+                        throw new ArgumentOutOfRangeException("offset is too large", nameof(value));
+                    }
+                    this.OffsetRaw = (uint)value;
+                }
+            }
 
             internal static Entry Read(Stream input, Endian endian)
             {
                 Entry instance;
                 instance.Id = input.ReadValueU32(endian);
-                instance.Offset = input.ReadValueU32(endian);
+                instance.OffsetRaw = input.ReadValueU32(endian);
                 instance.Size = BigFileSize.Read(input, endian);
                 return instance;
             }
@@ -142,7 +164,7 @@ namespace Gibbed.SleepingDogs.DataFormats
             public static void Write(Entry instance, Stream output, Endian endian)
             {
                 output.WriteValueU32(instance.Id, endian);
-                output.WriteValueU32(instance.Offset, endian);
+                output.WriteValueU32(instance.OffsetRaw, endian);
                 instance.Size.Write(output, endian);
             }
 
